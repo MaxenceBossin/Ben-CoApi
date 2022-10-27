@@ -17,15 +17,16 @@ class Message
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?user $sender = null;
-
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $receiver = null;
+    private ?User $sender_id = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $receiver_id = null;
 
     public function getId(): ?int
     {
@@ -44,38 +45,38 @@ class Message
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getSender(): ?user
+    public function getSenderId(): ?User
     {
-        return $this->sender;
+        return $this->sender_id;
     }
 
-    public function setSender(?user $sender): self
+    public function setSenderId(?User $sender_id): self
     {
-        $this->sender = $sender;
+        $this->sender_id = $sender_id;
 
         return $this;
     }
 
-    public function getReceiver(): ?user
+    public function getReceiverId(): ?User
     {
-        return $this->receiver;
+        return $this->receiver_id;
     }
 
-    public function setReceiver(?user $receiver): self
+    public function setReceiverId(?User $receiver_id): self
     {
-        $this->receiver = $receiver;
+        $this->receiver_id = $receiver_id;
 
         return $this;
     }

@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DumpsterRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DumpsterRepository::class)]
@@ -24,13 +23,17 @@ class Dumpster
     #[ORM\Column]
     private ?int $capacity = null;
 
-    #[ORM\OneToMany(mappedBy: 'dumpsters', targetEntity: Support::class)]
-    private Collection $supports;
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
 
-    public function __construct()
-    {
-        $this->supports = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $street_number = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $street_label = null;
+
+    #[ORM\Column(length: 5)]
+    private ?string $postal_code = null;
 
     public function getId(): ?int
     {
@@ -73,32 +76,50 @@ class Dumpster
         return $this;
     }
 
-    /**
-     * @return Collection<int, Support>
-     */
-    public function getSupports(): Collection
+    public function getCity(): ?string
     {
-        return $this->supports;
+        return $this->city;
     }
 
-    public function addSupports(Support $supports): self
+    public function setCity(string $city): self
     {
-        if (!$this->supports->contains($supports)) {
-            $this->supports->add($supports);
-            $supports->setDumpsters($this);
-        }
+        $this->city = $city;
 
         return $this;
     }
 
-    public function removeSupports(Support $supports): self
+    public function getStreetNumber(): ?string
     {
-        if ($this->supports->removeElement($supports)) {
-            // set the owning side to null (unless already changed)
-            if ($supports->getDumpsters() === $this) {
-                $supports->setDumpsters(null);
-            }
-        }
+        return $this->street_number;
+    }
+
+    public function setStreetNumber(string $street_number): self
+    {
+        $this->street_number = $street_number;
+
+        return $this;
+    }
+
+    public function getStreetLabel(): ?string
+    {
+        return $this->street_label;
+    }
+
+    public function setStreetLabel(string $street_label): self
+    {
+        $this->street_label = $street_label;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postal_code;
+    }
+
+    public function setPostalCode(string $postal_code): self
+    {
+        $this->postal_code = $postal_code;
 
         return $this;
     }

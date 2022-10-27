@@ -14,8 +14,8 @@ class Support
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $imageSrc = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_src = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -23,15 +23,15 @@ class Support
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToOne(inversedBy: 'garbageCollector')]
-    private ?dumpster $dumpsters = null;
+    #[ORM\ManyToOne]
+    private ?Dumpster $dumpster_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'supports')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $fkUser = null;
+    private ?User $fk_user_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'supports')]
-    private ?user $fkAdmin = null;
+    #[ORM\ManyToOne]
+    private ?User $fk_admin_id = null;
 
     public function getId(): ?int
     {
@@ -40,12 +40,12 @@ class Support
 
     public function getImageSrc(): ?string
     {
-        return $this->imageSrc;
+        return $this->image_src;
     }
 
-    public function setImageSrc(?string $imageSrc): self
+    public function setImageSrc(?string $image_src): self
     {
-        $this->imageSrc = $imageSrc;
+        $this->image_src = $image_src;
 
         return $this;
     }
@@ -74,38 +74,38 @@ class Support
         return $this;
     }
 
-    public function getDumpsters(): ?dumpster
+    public function getDumpsterId(): ?Dumpster
     {
-        return $this->dumpsters;
+        return $this->dumpster_id;
     }
 
-    public function setDumpsters(?dumpster $dumpsters): self
+    public function setDumpsterId(?Dumpster $dumpster_id): self
     {
-        $this->dumpsters = $dumpsters;
+        $this->dumpster_id = $dumpster_id;
 
         return $this;
     }
 
-    public function getFkUser(): ?user
+    public function getFkUserId(): ?User
     {
-        return $this->fkUser;
+        return $this->fk_user_id;
     }
 
-    public function setFkUser(?user $fkUser): self
+    public function setFkUserId(?User $fk_user_id): self
     {
-        $this->fkUser = $fkUser;
+        $this->fk_user_id = $fk_user_id;
 
         return $this;
     }
 
-    public function getFkAdmin(): ?user
+    public function getFkAdminId(): ?User
     {
-        return $this->fkAdmin;
+        return $this->fk_admin_id;
     }
 
-    public function setFkAdmin(?user $fkAdmin): self
+    public function setFkAdminId(?User $fk_admin_id): self
     {
-        $this->fkAdmin = $fkAdmin;
+        $this->fk_admin_id = $fk_admin_id;
 
         return $this;
     }

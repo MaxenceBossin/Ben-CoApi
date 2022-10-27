@@ -3,14 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,29 +28,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lastName = null;
+    private ?string $first_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $firstName = null;
+    private ?string $last_name = null;
 
-    #[ORM\OneToMany(mappedBy: 'fkUser', targetEntity: Route::class)]
-    private Collection $routes;
-
-    #[ORM\OneToMany(mappedBy: 'fkUser', targetEntity: Support::class)]
-    private Collection $supports;
-
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Message::class)]
-    private Collection $messages;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $token = null;
-
-    public function __construct()
-    {
-        $this->routes = new ArrayCollection();
-        $this->supports = new ArrayCollection();
-        $this->messages = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -144,116 +125,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
     public function getFirstName(): ?string
     {
-        return $this->firstName;
+        return $this->first_name;
     }
 
-    public function setFirstName(?string $firstName): self
+    public function setFirstName(?string $first_name): self
     {
-        $this->firstName = $firstName;
+        $this->first_name = $first_name;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Route>
-     */
-    public function getRoutes(): Collection
+    public function getLastName(): ?string
     {
-        return $this->routes;
+        return $this->last_name;
     }
 
-    public function addRoute(Route $route): self
+    public function setLastName(?string $last_name): self
     {
-        if (!$this->routes->contains($route)) {
-            $this->routes->add($route);
-            $route->setFkUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoute(Route $route): self
-    {
-        if ($this->routes->removeElement($route)) {
-            // set the owning side to null (unless already changed)
-            if ($route->getFkUser() === $this) {
-                $route->setFkUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Support>
-     */
-    public function getSupports(): Collection
-    {
-        return $this->supports;
-    }
-
-    public function addSupport(Support $support): self
-    {
-        if (!$this->supports->contains($support)) {
-            $this->supports->add($support);
-            $support->setFkUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSupport(Support $support): self
-    {
-        if ($this->supports->removeElement($support)) {
-            // set the owning side to null (unless already changed)
-            if ($support->getFkUser() === $this) {
-                $support->setFkUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(Message $message): self
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages->add($message);
-            $message->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getSender() === $this) {
-                $message->setSender(null);
-            }
-        }
+        $this->last_name = $last_name;
 
         return $this;
     }
@@ -263,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->token;
     }
 
-    public function setToken(string $token): self
+    public function setToken(?string $token): self
     {
         $this->token = $token;
 

@@ -14,68 +14,68 @@ class Route
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $DateStart = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $date_start = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateEnd = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $date_end = null;
 
     #[ORM\Column]
-    private array $routeJson = [];
+    private array $route_json = [];
 
-    #[ORM\ManyToOne(inversedBy: 'routes')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $fkUser = null;
+    private ?User $fk_user_id = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
+    public function getDateStart(): ?\DateTimeImmutable
     {
-        return $this->DateStart;
+        return $this->date_start;
     }
 
-    public function setDateStart(\DateTimeInterface $DateStart): self
+    public function setDateStart(\DateTimeImmutable $date_start): self
     {
-        $this->DateStart = $DateStart;
+        $this->date_start = $date_start;
 
         return $this;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    public function getDateEnd(): ?\DateTimeImmutable
     {
-        return $this->dateEnd;
+        return $this->date_end;
     }
 
-    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    public function setDateEnd(\DateTimeImmutable $date_end): self
     {
-        $this->dateEnd = $dateEnd;
+        $this->date_end = $date_end;
 
         return $this;
     }
 
     public function getRouteJson(): array
     {
-        return $this->routeJson;
+        return $this->route_json;
     }
 
-    public function setRouteJson(array $routeJson): self
+    public function setRouteJson(array $route_json): self
     {
-        $this->routeJson = $routeJson;
+        $this->route_json = $route_json;
 
         return $this;
     }
 
-    public function getFkUser(): ?user
+    public function getFkUserId(): ?User
     {
-        return $this->fkUser;
+        return $this->fk_user_id;
     }
 
-    public function setFkUser(?user $fkUser): self
+    public function setFkUserId(?User $fk_user_id): self
     {
-        $this->fkUser = $fkUser;
+        $this->fk_user_id = $fk_user_id;
 
         return $this;
     }
