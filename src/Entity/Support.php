@@ -6,7 +6,10 @@ use App\Repository\SupportRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+
 #[ORM\Entity(repositoryClass: SupportRepository::class)]
+#[ApiResource()]
 class Support
 {
     #[ORM\Id]
