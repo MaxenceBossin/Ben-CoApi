@@ -6,7 +6,10 @@ use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ApiResource()]
 class Message
 {
     #[ORM\Id]

@@ -6,7 +6,10 @@ use App\Repository\PlanningRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+
 #[ORM\Entity(repositoryClass: PlanningRepository::class)]
+#[ApiResource()]
 class Planning
 {
     #[ORM\Id]
