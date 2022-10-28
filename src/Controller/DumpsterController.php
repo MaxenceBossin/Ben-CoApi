@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-/**
- * @Route("/api", name="api_")
- */
+
 class DumpsterController extends AbstractController
 {
     // Fonction d'ajout des bennes
